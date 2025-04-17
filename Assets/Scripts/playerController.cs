@@ -27,6 +27,7 @@ using System.Collections;
     [SerializeField] float dodgeDuration;
     [SerializeField] float dodgeCooldown;
 
+    [SerializeField] Vector3 teleportDestination;
 
     int jumpCount;
     int HPOrig;
@@ -65,6 +66,8 @@ using System.Collections;
          crouch();
 
          dodge();
+
+        teleport();
     }
      void movement()
      {
@@ -156,6 +159,16 @@ using System.Collections;
         dodgeCooldownTimer += Time.deltaTime;
     }
 
+    void teleport()
+    {
+        if (Input.GetButtonDown("Teleport"))
+        {
+            controller.enabled = false;
+            transform.position = teleportDestination;
+            controller.enabled = true;
+        }
+    }
+
     void shoot()
      {
          shootTimer = 0;
@@ -191,6 +204,7 @@ using System.Collections;
         gamemanager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
     IEnumerator flashDamageScreen()
+
     {
         gamemanager.instance.playerDamageScreen.SetActive(true);
         yield return new WaitForSeconds(0.1f);
