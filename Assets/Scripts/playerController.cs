@@ -6,8 +6,9 @@ using System.Collections;
      [SerializeField] LayerMask ignoreLayer;
      [SerializeField] CharacterController controller;
 
-     [SerializeField] int HP;
-     [SerializeField] int speed;
+     //[SerializeField] int HP;
+    public int HP;
+    [SerializeField] int speed;
      [SerializeField] int sprintMod;
      [SerializeField] int jumpSpeed;
      [SerializeField] int jumpMax;

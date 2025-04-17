@@ -20,4 +20,12 @@ public class buttonFunctions : MonoBehaviour
         Application.Quit();
     #endif
     }
+    public void increaseHP(int cost)
+    {
+        if (gamemanager.instance.currency >= cost)
+        {
+            gamemanager.instance.playerScript.HP += 1;
+            gamemanager.instance.currency -= cost;
+        }
+    }
 }

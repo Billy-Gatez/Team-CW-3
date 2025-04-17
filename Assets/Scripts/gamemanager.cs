@@ -11,6 +11,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text gameGoalCountText;
+    [SerializeField] TMP_Text gameGoalXPText;
 
     public Image playerHPBar;
     public GameObject playerDamageScreen;
@@ -23,6 +24,7 @@ public class gamemanager : MonoBehaviour
     float timeScaleOrig;
 
     int gameGoalCount;
+    public int currency;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -67,10 +69,12 @@ public class gamemanager : MonoBehaviour
         menuActive.SetActive(false);
         menuActive = null;
     }
-    public void updateGameGoal(int amount)
+    public void updateGameGoal(int amount, int cur)
     {
         gameGoalCount += amount;
         gameGoalCountText.text = gameGoalCount.ToString("F0");
+        gameGoalXPText.text = gameGoalCount.ToString("F0");
+        currency += cur;
 
         if(gameGoalCount <= 0)
         {
