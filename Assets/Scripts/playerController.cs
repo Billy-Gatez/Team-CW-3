@@ -21,16 +21,26 @@ using System.Collections;
     [SerializeField] int crouchSpeed;
     [SerializeField] float crouchHeight;
 
-     int jumpCount;
-     int HPOrig;
+
+    [SerializeField] float dodgeSpeed;
+    [SerializeField] float dodgeDuration;
+    [SerializeField] float dodgeCooldown;
+
+
+    int jumpCount;
+    int HPOrig;
 
      float shootTimer;
+     float dodgeTimer;
+     float dodgeCooldownTimer;
 
-     Vector3 moveDir;
+
+    Vector3 moveDir;
      Vector3 playerVel;
 
      bool isSprinting;
      bool isCrouching;
+     bool isDodging;
 
     float originalHeight;
 
@@ -53,6 +63,7 @@ using System.Collections;
 
          crouch();
 
+         dodge();
     }
      void movement()
      {
@@ -121,7 +132,30 @@ using System.Collections;
         }
 
     }
-        void shoot()
+
+    void dodge()
+    {
+        if (Input.GetButtonDown("Dodge") && dodgeCooldownTimer >= dodgeCooldown)
+        {
+            isDodging = true;
+            dodgeTimer = 0;
+            dodgeCooldownTimer = 0;
+        }
+
+        if (isDodging)
+        {
+            dodgeTimer += Time.deltaTime;
+            controller.Move(moveDir * dodgeSpeed * Time.deltaTime);
+
+            if (dodgeTimer >= dodgeDuration)
+            {
+                isDodging = false;
+            }
+        }
+        dodgeCooldownTimer += Time.deltaTime;
+    }
+
+    void shoot()
      {
          shootTimer = 0;
 
