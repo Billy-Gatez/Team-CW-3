@@ -17,6 +17,10 @@ using System.Collections;
      [SerializeField] int shootDist;
      [SerializeField] float shootRate;
 
+
+    [SerializeField] int crouchSpeed;
+    [SerializeField] float crouchHeight;
+
      int jumpCount;
      int HPOrig;
 
@@ -26,12 +30,16 @@ using System.Collections;
      Vector3 playerVel;
 
      bool isSprinting;
+     bool isCrouching;
 
-     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    float originalHeight;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
      {
          HPOrig = HP;
          updatePlayerUI();
+         originalHeight = controller.height;
     }
 
      //  Update is called once per frame
@@ -43,7 +51,9 @@ using System.Collections;
 
          sprint();
 
-     }
+         crouch();
+
+    }
      void movement()
      {
          if(controller.isGrounded)
@@ -95,7 +105,23 @@ using System.Collections;
          }
      }
 
-     void shoot()
+    void crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            isCrouching = true;
+            controller.height = crouchHeight;
+            speed = crouchSpeed;
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            isCrouching = false;
+            controller.height = originalHeight;
+            speed = HPOrig;
+        }
+
+    }
+        void shoot()
      {
          shootTimer = 0;
 
